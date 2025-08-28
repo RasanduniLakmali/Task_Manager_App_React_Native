@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc,getDocs} from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc,getDocs,query,where} from "firebase/firestore"
 import api from "./config/api"
 import {Task} from "@/types/task"
 import {db} from "@/firebase"
@@ -31,6 +31,17 @@ export const getAllTask = async() => {
      id: task.id,
      ...task.data()
      })) as Task[]
+}
+
+export const getAllTaskByUserId = async (userId: string) => {
+  const q = query(tasksRef, where("userId", "==", userId))
+
+  const querySnapshot = await getDocs(q)
+  const taskList = querySnapshot.docs.map((taskRef) => ({
+    id: taskRef.id,
+    ...taskRef.data()
+  })) as Task[]
+  return taskList
 }
 
 

@@ -8,7 +8,7 @@ import {getFirestore} from "firebase/firestore"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyBIkyXcKnFrIS7yEkTCpZcixUKhdsJdHc4",
   authDomain: "taskmanagementapp-2aff3.firebaseapp.com",
   projectId: "taskmanagementapp-2aff3",
   storageBucket: "taskmanagementapp-2aff3.firebasestorage.app",

@@ -4,6 +4,7 @@ import { TextInput } from 'react-native-paper'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { createTask, getTaskById, updatetask } from '@/service/taskService'
 import { useLoader } from "@/context/LoaderContext";
+import { useAuth } from "@/context/authContext"
 
 const TaskFormScreen = () => {
   const { id } = useLocalSearchParams<{ id?: string }>()
@@ -12,6 +13,7 @@ const TaskFormScreen = () => {
   const [title, setTitle] = useState<string>("")
   const [description, setDescription] = useState<string>("")
   const { showLoader, hideLoader } = useLoader()
+
 
   const router = useRouter()
 
@@ -31,6 +33,8 @@ const TaskFormScreen = () => {
 
   }, [id])
 
+  const { user, loading } = useAuth()
+
   const handleSubmit = async () => {
     if (!title.trim()) {
       Alert.alert("Validation", "Title is required!")
@@ -45,7 +49,7 @@ const TaskFormScreen = () => {
     try {
       showLoader()
       if (isNew) {
-        await createTask({ title, description })
+        await createTask({ title, description,userId: user?.uid})
       } else {
         await updatetask(id!, { title, description }) // ✅ non-null assertion since id exists when updating
       }
